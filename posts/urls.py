@@ -14,12 +14,16 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from xml.etree.ElementInclude import include
 
+from django.urls import path
 from rest_framework import routers
 
-from .views import PostViewSet
+from .views import PostViewSet, like_post
 
 router = routers.SimpleRouter()
 router.register("posts", PostViewSet)
 
-urlpatterns = router.urls
+urlpatterns = [
+    path('like/<int:pk>/', like_post, name='like_post'),
+] + router.urls

@@ -13,7 +13,7 @@ from .serializers import PostSerializer, PostCreateSerializer
 # Create your views here.
 
 class PostViewSet(viewsets.ModelViewSet):
-    queryset = Post.objects.all()
+    queryset = Post.objects.all().order_by("pk")
     permission_classes = [CustomReadOnly]
     filterset_fields = ["author", "likes"]
 
@@ -26,6 +26,7 @@ class PostViewSet(viewsets.ModelViewSet):
         profile = Profile.objects.get(pk=self.request.user)
         serializer.save(author=self.request.user, profile=profile)
 
+
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def like_post(request, pk):
@@ -35,4 +36,3 @@ def like_post(request, pk):
     else:
         post.likes.add(request.user)
     return Response({"status": "ok"})
-
