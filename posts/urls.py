@@ -19,10 +19,11 @@ from xml.etree.ElementInclude import include
 from django.urls import path
 from rest_framework import routers
 
-from .views import PostViewSet, like_post
+from .views import PostViewSet, like_post, CommentViewSet
 
 router = routers.SimpleRouter()
 router.register("posts", PostViewSet)
+router.register("comments", CommentViewSet)
 
 urlpatterns = [
     path('like/<int:pk>/', like_post, name='like_post'),
